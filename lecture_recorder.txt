@@ -1,0 +1,59 @@
+#:kivy 2.0.0
+
+<MainLayout>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        Label:
+            text: "Lecture Recorder"
+            font_size: 24
+            size_hint_y: 0.2
+
+        BoxLayout:
+            size_hint_y: 0.2
+            spacing: 10
+
+            Label:
+                text: "Output Format:"
+                size_hint_x: 0.4
+            Spinner:
+                id: format_spinner
+                text: '.mp4'
+                values: ['.mp4', '.mkv', '.m4a']
+                size_hint_x: 0.6
+                on_text: app.set_output_format(self.text)
+
+        BoxLayout:
+            size_hint_y: 0.2
+            spacing: 10
+
+            Label:
+                text: "Record Mode:"
+                size_hint_x: 0.4
+            Spinner:
+                id: mode_spinner
+                text: 'Video + Audio'
+                values: ['Video + Audio', 'Audio Only']
+                size_hint_x: 0.6
+                on_text: app.set_record_mode(self.text)
+
+        BoxLayout:
+            size_hint_y: 0.4
+            spacing: 10
+
+            Button:
+                id: start_button
+                text: "Start Recording"
+                on_press: app.start_recording()
+            Button:
+                id: pause_button
+                text: "Pause"
+                disabled: True
+                on_press: app.toggle_pause()
+            Button:
+                id: stop_button
+                text: "Stop Recording"
+                disabled: True
+                on_press: app.stop_recording()

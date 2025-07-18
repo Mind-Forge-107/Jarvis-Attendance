@@ -1,0 +1,217 @@
+#:kivy 2.0.0
+#:import MDFlatButton kivymd.uix.button.MDFlatButton
+#:import MDRoundFlatButton kivymd.uix.button.MDRoundFlatButton
+#:import MDTextField kivymd.uix.textfield.MDTextField
+#:import MDLabel kivymd.uix.label.MDLabel
+
+<LoginScreen>:
+    MDFloatLayout:
+        # Background image
+        Image:
+            source: "night.jpg"  # Add your background image here
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+
+        # Transparent rounded box for login details
+        MDFloatLayout:
+            size_hint: 0.4, 0.6
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 0.3  # Mica/glass effect
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [20, 20, 20, 20]  # Rounded corners
+
+            # Title
+            MDLabel:
+                text: "Login"
+                halign: "center"
+                font_style: "H4"
+                pos_hint: {"center_x": 0.5, "center_y": 0.85}
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 1  # Black text for contrast
+
+            # Subtitle
+            MDLabel:
+                text: "Please enter your login and your password"
+                halign: "center"
+                font_style: "Body1"
+                pos_hint: {"center_x": 0.5, "center_y": 0.75}
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 1  # Black text
+
+            # Username or Email Field
+            MDTextField:
+                id: login_email
+                hint_text: "Username or E-mail"
+                pos_hint: {"center_x": 0.5, "center_y": 0.6}
+                size_hint_x: 0.8
+                icon_right: "account"
+                line_color_focus: 0, 1, 0, 1  # Green focus line
+                icon_right_color: 0, 0, 0, 1  # Black icon
+                on_text: root.on_text_input(self, self.text)  # Capture text input
+
+            # Password Field
+            MDTextField:
+                id: login_password
+                hint_text: "Password"
+                password: True
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                size_hint_x: 0.8
+                icon_right: "key"
+                line_color_focus: 0, 1, 0, 1  # Green focus line
+                icon_right_color: 0, 0, 0, 1  # Black icon
+                on_text: root.on_text_input(self, self.text)  # Capture text input
+
+            # Forgot Password Link (inside the box, under password field)
+            MDLabel:
+                text: "[ref=forgot]Forgot password?[/ref]"
+                halign: "center"
+                pos_hint: {"center_x": 0.75, "center_y": 0.45}
+                theme_text_color: "Custom"
+                text_color: 0, 1, 1, 1  # Cyan text
+                markup: True
+                on_ref_press: root.forgot_password()  # Call the forgot_password method
+
+            # Login Message (for success/error)
+            MDLabel:
+                id: login_message
+                text: ""
+                halign: "center"
+                pos_hint: {"center_x": 0.5, "center_y": 0.4}
+                theme_text_color: "Custom"
+                text_color: 1, 0, 0, 1  # Red text for errors
+
+            # Login Button
+            MDRoundFlatButton:
+                text: "Login"
+                pos_hint: {"center_x": 0.5, "center_y": 0.35}
+                size_hint_x: 0.8
+                md_bg_color: 0, 1, 0, 1  # Green background
+                text_color: 1, 1, 1, 1  # White text
+                on_press: root.login()  # Call the login method
+
+            # Sign Up Button
+            MDRoundFlatButton:
+                text: "Sign Up"
+                pos_hint: {"center_x": 0.5, "center_y": 0.25}
+                size_hint_x: 0.8
+                md_bg_color: 0, 0, 0, 1  # Black background
+                text_color: 1, 1, 1, 1  # White text
+                on_press: app.switch_to_signup()  # Navigate to signup page
+
+            # Register Link
+            MDLabel:
+                text: "Not a member yet? [ref=signup]Register![/ref]"
+                halign: "center"
+                pos_hint: {"center_x": 0.5, "center_y": 0.15}
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 1  # Black text
+                markup: True
+                on_ref_press:
+                    app.switch_to_signup()
+
+<SignupScreen>:
+    MDFloatLayout:
+        # Background image
+        Image:
+            source: "night.jpg"  # Add your background image here
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+
+        # Transparent rounded box for signup details
+        MDFloatLayout:
+            size_hint: 0.4, 0.6
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 0.3  # Mica/glass effect
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [20, 20, 20, 20]  # Rounded corners
+
+            # Title
+            MDLabel:
+                text: "Sign Up"
+                halign: "center"
+                font_style: "H4"
+                pos_hint: {"center_x": 0.5, "center_y": 0.85}
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 1  # Black text
+
+            # Subtitle
+            MDLabel:
+                text: "Create a new account"
+                halign: "center"
+                font_style: "Body1"
+                pos_hint: {"center_x": 0.5, "center_y": 0.75}
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 1  # Black text
+
+            # Username Field
+            MDTextField:
+                id: signup_username
+                hint_text: "Username"
+                pos_hint: {"center_x": 0.5, "center_y": 0.6}
+                size_hint_x: 0.8
+                icon_right: "account"
+                line_color_focus: 0, 1, 0, 1  # Green focus line
+                icon_right_color: 0, 0, 0, 1  # Black icon
+                on_text: root.on_text_input(self, self.text)  # Capture text input
+
+            # Email Field
+            MDTextField:
+                id: signup_email
+                hint_text: "E-mail"
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                size_hint_x: 0.8
+                icon_right: "email"
+                line_color_focus: 0, 1, 0, 1  # Green focus line
+                icon_right_color: 0, 0, 0, 1  # Black icon
+                on_text: root.on_text_input(self, self.text)  # Capture text input
+
+            # Password Field
+            MDTextField:
+                id: signup_password
+                hint_text: "Password"
+                password: True
+                pos_hint: {"center_x": 0.5, "center_y": 0.4}
+                size_hint_x: 0.8
+                icon_right: "key"
+                line_color_focus: 0, 1, 0, 1  # Green focus line
+                icon_right_color: 0, 0, 0, 1  # Black icon
+                on_text: root.on_text_input(self, self.text)  # Capture text input
+
+            # Signup Message (for success/error)
+            MDLabel:
+                id: signup_message
+                text: ""
+                halign: "center"
+                pos_hint: {"center_x": 0.5, "center_y": 0.35}
+                theme_text_color: "Custom"
+                text_color: 1, 0, 0, 1  # Red text for errors
+
+            # Sign Up Button
+            MDRoundFlatButton:
+                text: "Sign Up"
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                size_hint_x: 0.8
+                md_bg_color: 0, 1, 0, 1  # Green background
+                text_color: 1, 1, 1, 1  # White text
+                on_press: root.signup()  # Call the signup method
+
+            # Back to Login Link
+            MDLabel:
+                text: "Already have an account? [ref=login]Login![/ref]"
+                halign: "center"
+                pos_hint: {"center_x": 0.5, "center_y": 0.15}
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 1  # Black text
+                markup: True
+                on_ref_press:
+                    app.switch_to_login()

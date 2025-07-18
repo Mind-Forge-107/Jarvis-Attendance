@@ -1,0 +1,66 @@
+#:kivy 2.0.0
+#:import MDLabel kivymd.uix.label.MDLabel
+#:import MDProgressBar kivymd.uix.progressbar.MDProgressBar
+
+<LoadingScreen>:
+    canvas.before:
+        # Top-left color (animated)
+        Color:
+            group: 'top_left_color'
+            rgba: 1, 0.8, 0, 1  # Initial Yellow
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+        # Bottom-right color (animated)
+        Color:
+            group: 'bottom_right_color'
+            rgba: 0, 0.7, 0.6, 1  # Initial Teal
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    # App title
+    MDLabel:
+        id: title_label
+        text: "JARVIS"
+        font_style: "H2"
+        halign: "center"
+        pos_hint: {"center_x": 0.5, "center_y": 0.7}
+        color: 1, 1, 1, 1  # White text
+
+    # Subtitle
+    MDLabel:
+        id: subtitle_label
+        text: "AI-POWERED INTELLIGENT MONITORING SYSTEM"
+        font_style: "Caption"
+        halign: "center"
+        pos_hint: {"center_x": 0.5, "center_y": 0.6}
+        color: 0.8, 0.8, 0.8, 1  # Light gray text
+
+    # Loading text with animated dots
+    MDLabel:
+        id: loading_label
+        text: "loading"
+        font_style: "Body1"
+        halign: "center"
+        pos_hint: {"center_x": 0.5, "center_y": 0.3}
+        color: 1, 1, 1, 1  # Yellow text
+
+    # Progress bar
+    MDProgressBar:
+        id: progress_bar
+        value: 0
+        pos_hint: {"center_x": 0.5, "center_y": 0.2}
+        size_hint: 0.6, None
+        height: "10dp"
+        color: 1, 1, 1, 1  # Yellow progress bar
+
+    # Percentage text
+    MDLabel:
+        id: percentage_label
+        text: "0 %"
+        font_style: "Body1"
+        halign: "center"
+        pos_hint: {"center_x": 0.85, "center_y": 0.2}
+        color: 1, 1, 1, 1  # White text

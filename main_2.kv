@@ -1,0 +1,193 @@
+#:import Window kivy.core.window.Window
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+#:import MDExpansionPanel kivymd.uix.expansionpanel.MDExpansionPanel
+#:import MDExpansionPanelOneLine kivymd.uix.expansionpanel.MDExpansionPanelOneLine
+#:import OneLineListItem kivymd.uix.list.OneLineListItem
+#:import MDDatePicker kivymd.uix.pickers.MDDatePicker
+
+#:import MDCheckbox kivymd.uix.selectioncontrol.MDCheckbox
+
+#:import MDList kivymd.uix.list.MDList
+#:import OneLineIconListItem kivymd.uix.list.OneLineIconListItem
+#:import IconLeftWidget kivymd.uix.list.IconLeftWidget
+
+MDNavigationLayout:
+    ScreenManager:
+        id: screen_manager
+        HomeScreen:
+        DashboardScreen:
+        ToolsScreen:
+        SettingsScreen:
+
+    MDNavigationDrawer:
+        id: nav_drawer
+        md_bg_color: 0, 0, 1, 0.6
+        BoxLayout:
+            orientation: "vertical"
+            spacing: "8dp"
+            padding: "8dp"
+
+            MDList:
+                OneLineIconListItem:
+                    text: "Home"
+                    on_release:
+                        screen_manager.current = "home"
+                        app.root.ids.nav_drawer.set_state("close")
+                    IconLeftWidget:
+                        icon: "home"
+
+                OneLineIconListItem:
+                    text: "Dashboard"
+                    on_release:
+                        screen_manager.current = "dashboard"
+                        app.root.ids.nav_drawer.set_state("close")
+                    IconLeftWidget:
+                        icon: "view-dashboard"
+
+                OneLineIconListItem:
+                    text: "Tools"
+                    on_release:
+                        screen_manager.current = "tools"
+                        app.root.ids.nav_drawer.set_state("close")
+                    IconLeftWidget:
+                        icon: "wrench"
+
+                OneLineIconListItem:
+                    text: "Settings"
+                    on_release:
+                        screen_manager.current = "settings"
+                        app.root.ids.nav_drawer.set_state("close")
+                    IconLeftWidget:
+                        icon: "cog"
+
+<HomeScreen>:
+    name: "home"
+    MDBoxLayout:
+        orientation: "vertical"
+        MDTopAppBar:
+            title: "Home"
+            md_bg_color: 0, 0, 1, 1
+            specific_text_color: 1, 1, 1, 1
+            left_action_items: [['menu', lambda x: app.root.ids.nav_drawer.set_state("open")]]
+            size_hint_y: None
+            height: "56dp"
+
+        MDLabel:
+            text: "Welcome to Jarvis!"
+            font_style: "H5"
+            halign: "center"
+
+<DashboardScreen>:
+    name: "dashboard"
+    MDBoxLayout:
+        orientation: "vertical"
+        MDTopAppBar:
+            title: "Dashboard"
+            md_bg_color: 0, 0, 1, 1
+            specific_text_color: 1, 1, 1, 1
+            left_action_items: [['menu', lambda x: app.root.ids.nav_drawer.set_state("open")]]
+            size_hint_y: None
+            height: "56dp"
+        MDLabel:
+            text: "Dashboard Screen"
+            halign: "center"
+
+<ToolsScreen>:
+    name: "tools"
+    MDBoxLayout:
+        orientation: "vertical"
+        MDTopAppBar:
+            title: "Tools"
+            md_bg_color: 0, 0, 1, 1
+            specific_text_color: 1, 1, 1, 1
+            left_action_items: [['menu', lambda x: app.root.ids.nav_drawer.set_state("open")]]
+            size_hint_y: None
+            height: "56dp"
+        MDLabel:
+            text: "Tools Screen"
+            halign: "center"
+
+
+
+
+<SettingsScreen>:
+    name: "settings"
+    MDBoxLayout:
+        orientation: "vertical"
+        MDTopAppBar:
+            title: "Settings"
+            md_bg_color: 0, 0, 1, 1
+            specific_text_color: 1, 1, 1, 1
+            left_action_items: [['menu', lambda x: app.root.ids.nav_drawer.set_state("open")]]
+            size_hint_y: None
+            height: "56dp"
+        MDScrollView:
+            MDBoxLayout:
+                orientation: "vertical"
+                padding: "20dp", "10dp"
+                spacing: "10dp"
+
+                MDExpansionPanel:
+                    panel_cls: MDExpansionPanelOneLine(text="Account")
+                    content:
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            OneLineListItem:
+                                text: "Profile"
+                                on_release: print("Profile clicked")
+
+                MDExpansionPanel:
+                    panel_cls: MDExpansionPanelOneLine:
+                        text: "Preferences"
+                    content:
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            OneLineListItem:
+                                text: "Theme"
+                                on_release: app.show_theme_picker()
+                            MDBoxLayout:
+                                orientation: "horizontal"
+                                padding: "20dp", "0dp"
+                                MDLabel:
+                                    text: "Theme Style:"
+                                    theme_text_color: "Secondary"
+                                    halign: "left"
+                                MDRadioButton:
+                                    group: "theme_style"
+                                    on_release: app.set_theme("Light")
+                                MDLabel:
+                                    text: "Light"
+                                MDRadioButton:
+                                    group: "theme_style"
+                                    on_release: app.set_theme("Dark")
+                                MDLabel:
+                                    text: "Dark"
+
+                MDExpansionPanel:
+                    panel_cls: MDExpansionPanelOneLine:
+                        text: "Security & Privacy"
+                    content:
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            OneLineListItem:
+                                text: "Change Password"
+                                on_release: app.show_password_dialog()
+                            OneLineListItem:
+                                text: "Change Email"
+                                on_release: app.show_email_dialog()
+                            OneLineListItem:
+                                text: "Set New PIN"
+                                on_release: app.show_pin_dialog()
+
+                MDExpansionPanel:
+                    panel_cls: MDExpansionPanelOneLine:
+                        text: "About"
+                    content:
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            MDLabel:
+                                text: "Jarvis v1.0.0"
+                            MDLabel:
+                                text: "Intelligent Monitoring System"
+                            MDLabel:
+                                text: "Release Date: 30-01-2025"
